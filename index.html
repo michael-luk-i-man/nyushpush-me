@@ -1,0 +1,766 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>push | NYUSH</title>
+<script src="js/ldng.js"></script>
+<link href="css/960_24_col.css" rel="stylesheet" type="text/css" title="960 grid" />
+<link href="css/globular.css" rel="stylesheet" type="text/css"  />
+<link href="css/tmr.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<style type="text/css">
+.pace .pace-progress {
+	background-color: #FFF;
+	position: fixed;
+	z-index: 98;
+	top: 0px;
+	right: 0px;
+	height: 3px;
+	max-width: 100%;
+	opacity: 0.7;
+	-webkit-transition: width 1s;
+	-moz-transition: width 1s;
+	-o-transition: width 1s;
+	transition: width 1s;
+}
+.pace-inactive {
+	display: none;
+}
+</style>
+<link rel="shortcut icon" href="ims/ico/favicon.jpg"/>
+</head>
+<body>
+
+  <audio id="alarming">
+  <source src="BRODYQUEST.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+<div class="togfr1" ></div>
+<div class="togfr2" ></div>
+<div class="togall" >`</div>
+<iframe name="fr1" id="frame1" src=""></iframe>
+<iframe name="fr2" id="frame2" src=""></iframe>
+
+<div id="pushpad">
+<div id="container">
+  <div id="navish">
+    <nav>
+
+      <div class="tiles"> 
+    
+        <a  href="javascript:void(0)" onclick="c('fr1')" title= "NYU Classes">
+        <div class="boxed" id="classes" onmouseover="hoveron(classes)" onmouseout="hoveroff(classes)"></div>
+        </a> 
+        
+        
+      <a href="javascript:void(0)" onclick="manageWindows('http://mail.google.com',gmail)" title="Google Mail">
+        <div onmouseover="hoveron(gmailid)" onmouseout="hoveroff(gmailid)"  class="boxed" id = "gmail"></div>
+        </a>
+        
+        <a href="http://suggest.meteor.com"   onclick="hidepush(); s('frame1');" target="fr1" title="NYUSH Suggest">
+        <div onmouseover="hoveron(suggest)" onmouseout="hoveroff(suggest)"  class="boxed" id="suggest"></div>
+        </a>
+
+        <a href="http://m.wolframalpha.com"   onclick="hidepush(); w('frame1');" target="fr1" title="Wolfram Alpha">
+        <div onmouseover="hoveron(alpha)" onmouseout="hoveroff(alpha)"  class="boxed" id="alpha"></div>
+        </a>
+       
+       
+      <a href="javascript:void(0)" onclick="manageWindows('http://drive.google.com',drive)" title="Google Drive">
+        <div onmouseover="hoveron(driveid)" onmouseout="hoveroff(driveid)"  class="boxed" id = "driveid"></div>
+        </a>
+       
+         <a href="http://nyushpush.me/thoughtbox"  onclick="t('frame2')" target="fr2" title="Thoughtpad">
+        <div onmouseover="hoveron(thought)" onmouseout="hoveroff(thought)"  class="boxed" id="thought"></div>
+        </a> 
+        
+        
+        </div>
+    </nav>
+    <div id="tmr"><br>
+      <div id="message"></div>
+      <span id="timer"> <span id="minutes">24</span> <span id="middle">:</span> <span id="seconds">59</span> </span>
+      <div id="minsec">min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sec</div>
+      <div id="test"></div>
+    </div>
+    
+  </div>
+<div id="push">
+  <div id="buttons">
+    <button id="start">
+    <img src="ims/ico/push.png">
+    </button>
+    <button id="stop">
+   <img src="ims/ico/push.png">
+    </button>
+    <button id="reset">
+    <img src="ims/ico/push.png">
+    </button>
+  </div>
+</div>
+
+<div id="navishb"></div>
+<div id="pushb"></div>
+</div>
+</div>
+
+  <footer> 
+  	 <a href="#" class="tip"><span>Visit the about page for more information<br></span></a>
+    <a href="#" class="tip">help<span >
+    
+<br>
+	Tab - Toggle Pushpad<br>
+  Enter - Start Countdown<br>
+  _______________<br><br>
+  Arrows - Control Views<br>
+	Space - Toggle Views <br>
+  _______________<br><br>
+    C - Classes<br>
+    G - Gmail<br>
+    S - Suggest<br>
+    W - Wolfram<br>
+    D - Google Drive <br>
+    T - Thoughtpad<br>
+     _______________<br><br>
+    ? - 'Baidu' Search <br>
+    </span></a> |
+    <a href="/about" class="tip" target="_blank">about<span>learn more about push</span></a> | 
+   	<span id="glitch"><a href="#" class="tip">find a glitch?<span>man has flaws. comment on push here.</span></a></span>
+   </footer>
+
+<!--<div id="pushstart"></div>
+<div id="pushstop"></div>-->
+
+<input type="text" id="nullin" autofocus>
+</input>
+
+
+<div id="feedback"><iframe id="feedframe" src="feedback.php">
+
+</iframe>
+</div>
+
+
+<script type="text/javascript">
+
+
+function doc_keyUp(e) {
+check();
+   
+	if (e.keyCode == 71) manageWindows('http://mail.google.com','gmail');
+    
+	else if (e.keyCode == 32) {peekabob0(); }
+	
+	else if (e.keyCode == 37) {
+		if ( fr2active1) {} 
+		else if (  fr1activeh || fr2activeh ) peekabob1();
+		else if (  fr1active1 ) { setwidth('frame1','50%');setwidth('frame2','49%');}
+		else if ( !fr1active1 )  peekabob2();}
+		
+	else if (e.keyCode == 39) {
+    	if ( fr1active1) {} 
+		else if ( fr2activeh || fr1activeh ) peekabob2();
+		else if (  fr2active1 ) { setwidth('frame1','50%');setwidth('frame2','49%');}
+		else if ( !fr2active1 )  peekabob1(); }
+	
+	else if (e.keyCode == 9) {
+		e.preventDefault();		
+		tab();}	
+	
+	else if (e.keyCode == 84) {
+		t('frame2');}	
+	
+	else if (e.keyCode == 67) {
+		c('frame1');}		
+	
+	else if (e.keyCode == 68) manageWindows('http://drive.google.com','drive');
+	
+	else if (e.keyCode == 191) manageWindows('http://google.com','searchid');
+
+	else if (e.keyCode == 13) {
+		if (start.style.display != "none" ) startTimer();
+		else stopTimer(); }		
+	
+	else if (e.keyCode == 83) {
+		s('frame1'); }	
+	
+	else if (e.keyCode == 82) {
+		r('frame1'); }	
+	
+	
+	else if (e.keyCode == 87) {
+		setTimeout(function() {hidepush();}, 100);
+		w('frame1'); 
+		}
+		
+	else if (e.keyCode == 65) {
+		setTimeout(function() {hidepush();}, 100);
+		w('frame1'); 
+		}				
+	
+	else if (e.keyCode == 56) {
+		s('frame2');
+		c('frame1');
+		manageWindows('http://mail.google.com','gmail'); 
+		}
+	
+	else if (e.keyCode == 40) {
+		setwidth('frame2','0%');
+		setwidth('frame1','0%'); check(); 	setdanecook('fr2','none');
+		setdanecook('fr1','none');}
+	
+	
+	else if (e.keyCode == 38) {
+		setwidth('frame2','49%');
+		setwidth('frame1','50%'); check(); 	setdanecook('fr2','half');
+		setdanecook('fr1','half');}
+	
+	else if (e.keyCode == 88) {
+		closetabs(); 
+	
+		}
+}
+
+
+$(document).ready(function(){
+
+if ( getdanecook('fr1') == 'none' && getdanecook('fr2') == 'none' ) {setwidth('frame1','0%'); setwidth('frame2','0%'); }
+else if ( getdanecook('fr1') == 'full' ) {setwidth('frame1','100%'); setwidth('frame2','0%');}
+else if ( getdanecook('fr2') == 'full' ) {setwidth('frame2','100%'); setwidth('frame1','0%');}
+else if ( getdanecook('fr1') == 'half' && getdanecook('fr2') == 'half' ) {setwidth('frame1','50%'); setwidth('frame2','49%'); }
+else if ( getdanecook('fr1') == 'half' && getdanecook('fr2') == 'none' ) {setwidth('frame1','50%'); setwidth('frame2','0%'); }
+else if ( getdanecook('fr1') == 'none' && getdanecook('fr2') == 'half' ) {setwidth('frame1','0%'); setwidth('frame2','49%'); }
+else { setwidth('frame2','49%'); setwidth('frame1','50%'); }
+
+if ( getdanecook('frurl1') || getdanecook('frurl2')) {
+document.getElementById('frame1').src = getdanecook('frurl1');
+document.getElementById('frame2').src = 'http://nyushpush.me/thoughtbox';}
+
+else {
+document.getElementById('frame1').src = 'http://wolframalpha.com';
+document.getElementById('frame2').src = 'http://nyushpush.me/thoughtbox';}
+		
+
+
+		
+
+// register the handler 
+document.addEventListener('keydown', doc_keyUp, false);
+
+$('.togfr1').click(peekabob1);	
+$('.togfr2').click(peekabob2);
+$('.togall').click(peekabob0);
+$('.boxed').click(Pace.restart);
+$('#glitch').click(feedbackt);
+
+});
+
+    var windows = [], i = 0;
+    function manageWindows(url,boo) {
+        
+            gmail=true;
+                var url = url;
+                
+                if (url) {
+                    // Check if the URL contains "http://" in the string
+                    // If it doesn't force "http://" to the front of the URL
+                    if (!url.match(/^(http(s)?):\/\//i)) {
+                        url = 'http://' + url;
+                    }
+                    
+                    // Make sure the url has a length of at least 1 or else
+                    // do nothing
+                    if (url.length) {
+                        windows[i] = window.open(url, 'tabWindow_' + i);
+                        i++; return true;
+                    }
+                } 
+			}
+	
+function closetabs() { 
+                var len = windows.length;			
+				for ( var j = 0; j < len; j++) { 
+                    // Make sure the id is valid
+					if (!(typeof windows[j] === 'undefined'))
+						{windows[j].close();
+                    delete windows[j]; }
+					
+					while (typeof windows[j] === 'undefined') {
+						j++;
+                    if (j>20) break;
+                    }               
+				}
+			}
+			
+			
+function checkwidth(ele) {
+	var w = document.getElementById(ele).style.width;
+	return w;
+	}
+	
+function setwidth(ele,value) {
+	document.getElementById(ele).style.width=value;
+	}
+	
+	
+function seth(ele,value) {
+	document.getElementById(ele).style.height=value;
+	}		
+
+function check() {
+fr1active1 = checkwidth('frame1') == '100%'; 
+fr1activeh = checkwidth('frame1') == '50%';
+fr2active1 = checkwidth('frame2') == '100%';
+fr2activeh = checkwidth('frame2') == '49%';	
+}
+
+function setdanecook(name,value) { document.cookie = name+"="+value;}
+function getdanecook(name) { 
+var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	
+	return null;}
+function peekabob1() {
+	
+	check();
+	if ( fr2activeh ){
+		setwidth('frame2','100%'); 
+		setwidth('frame1','0%'); 
+		check();
+		setdanecook('fr2','full');
+		setdanecook('fr1','none');
+	}
+	
+	else if ( fr2active1 ){
+		setwidth('frame2','49%');
+		setwidth('frame1','50%');
+	
+		check();
+		setdanecook('fr2','half');
+		setdanecook('fr1','half');
+	}
+	
+	
+	else if ( fr1active1 || fr1activeh) {
+		 setwidth('frame1','0%');check(); 
+		 setdanecook('fr2','none');
+		setdanecook('fr1','none'); 
+	}
+	
+	
+	else { 
+		setwidth('frame1','100%'); check();
+		 setdanecook('fr2','none');
+		setdanecook('fr1','full');
+		
+	}
+}
+
+function peekabob2() {
+	
+	 check();
+	if ( fr1activeh ){
+		setwidth('frame2','0%'); 
+		setwidth('frame1','100%');  
+		check();
+		setdanecook('fr2','none');
+		setdanecook('fr1','full');
+	}
+	
+	else if ( fr1active1 ){
+		setwidth('frame2','49%');
+		setwidth('frame1','50%');
+		   check();
+		   	setdanecook('fr2','half');
+		setdanecook('fr1','half');
+	}
+	
+	else if ( fr2active1 || fr2activeh ) { setwidth('frame2','0%'); check();
+		setdanecook('fr2','none');
+		setdanecook('fr1','none');}
+
+	else { 
+		setwidth('frame2','100%');  check();
+		setdanecook('fr2','full');
+		setdanecook('fr1','none');}
+}
+
+function peekabob0() { 
+	check();
+	if (fr1active1 || fr1activeh || fr2active1 || fr2activeh) {
+		setwidth('frame2','0%');
+		setwidth('frame1','0%'); check(); 	setdanecook('fr2','none');
+		setdanecook('fr1','none');}
+		
+	else { setwidth('frame2','49%');
+		setwidth('frame1','50%'); 	setdanecook('fr2','half');
+		setdanecook('fr1','half');}
+ 
+}
+
+function openframe(framid,frurl) {
+	
+	if ( framid == 'frame1' ) {
+			
+			setwidth('frame1','50%');
+			setwidth('frame2','49%');
+			setdanecook('frurl1',frurl); 
+			setdanecook('fr1','half');
+			setdanecook('fr2','half');  
+			Pace.restart();
+			window.open(frurl,"fr1"); 
+		}
+		
+	
+	else if ( framid == 'frame2' ) {
+		
+			setwidth('frame2','49%');
+			setwidth('frame1','50%'); 
+			setdanecook('frurl2',frurl); 
+			setdanecook('fr2','half'); 
+			setdanecook('fr1','half'); 
+			Pace.restart();
+			window.open(frurl,"fr2"); 
+		}
+	}
+		
+
+
+function flash(frid) {
+		frid.style.backgroundSize = "120px 120px"; 
+		setTimeout(function() {frid.style.backgroundSize = "60px 60px";}, 300); 
+		setTimeout(function() {frid.style.transition = "0.2s";}, 1000);
+		setTimeout(function() {frid.style.transition = "ease-in 0.2s";}, 300);		
+}
+
+function hoveron(frid) {
+		frid.style.backgroundSize = "120px 120px";
+}
+
+function hoveroff(frid) {
+		frid.style.backgroundSize = "60px 60px";
+}
+
+function s(which) {
+		flash(suggest);
+		setdanecook('frurl1', 'http://suggest.meteor.com');
+		openframe(which,'http://suggest.meteor.com');
+}
+
+
+function r(which) {
+		flash(suggest);
+		setdanecook('frurl1', 'http://nyushpush.me/readings');
+		openframe(which,'http://nyushpush.me/readings');
+}
+
+var isChrome;
+
+function c(which) { 
+
+		flash(classes);
+		isChrome = !!window.chrome; 
+		if(isChrome === false) {
+		setdanecook('frurl1', 'http://newclasses.nyu.edu');
+   		openframe(which,'http://newclasses.nyu.edu');
+		} 
+		
+		else manageWindows('http://newclasses.nyu.edu','gmail'); 
+		
+		}
+
+		 
+function w(which) {
+		flash(alpha);
+		setdanecook('frurl1', 'http://m.wolframalpha.com');
+		openframe(which,'http://m.wolframalpha.com');
+}
+
+ 
+function t(which) {
+		flash(thought);
+		setdanecook('frurl2', 'http://nyushpush.me/thoughtbox');
+		openframe(which,'http://nyushpush.me/thoughtbox');
+}		 		 
+
+function hidepush() {pushbar = false;
+		$('#navish').slideUp(100);
+		$('#navishb').slideUp(100);
+        pushb.style.display='none';}
+
+function tab() {
+
+		if
+		(pushbar == false) {	
+		pushbar = true; 
+		setdanecook('pushpadactive', 'true');
+		setTimeout(function () {
+		pushb.style.display = 'block';
+		$('#navish').slideDown(100);
+		$('#navishb').slideDown(100);
+        },20);
+	//	setTimeout(function () {
+		//pushb.style.width = "150px";
+		//pushb.style.left = "40px";
+        //},270);
+		}
+		
+		else{
+		pushbar = false;
+		pushb.style.display = 'none';
+		setdanecook('pushpadactive', 'false');
+		$('#navish').slideUp(100);
+		$('#navishb').slideUp(100);
+	//	setTimeout(function () {
+    //   pushb.style.width = "54px";
+		//pushb.style.left = "89px";},180);
+		
+		}
+
+}
+
+
+
+function feedbackt() {  
+		if
+		(feedback == false) {	
+		feedback=true;
+		feedbackid.style.display = "block";
+		}
+		
+		else{
+		feedback = false;
+		feedbackid.style.display = "none";
+		}
+
+}
+
+
+var fr1active1 = checkwidth('frame1') == '100%'; 
+var fr1activeh = checkwidth('frame1') == '50%';
+var fr2active1 = checkwidth('frame2') == '100%';
+var fr2activeh = checkwidth('frame2') == '49%';
+var gmail = false;
+var drive = false;
+var searchb = false;
+
+"use strict";
+  
+var bigTime = 1498; // time in seconds
+var mode = "normal";
+var animation = "fadeToBlack";
+
+var color = "0D5B85";
+var percent;
+
+var mins;
+var secs;
+
+var countdownID;
+
+// get all the elements
+var minutes = document.getElementById("minutes");
+var seconds = document.getElementById("seconds");
+var message = document.getElementById("message");
+
+
+var test = document.getElementById("test");
+var minsec = document.getElementById("minsec");
+var navishb = document.getElementById("navishb");
+var pushb = document.getElementById("pushb");
+var gmailid = document.getElementById("gmail");
+var suggest = document.getElementById("suggest");
+var classes = document.getElementById("classes");
+var alpha = document.getElementById("alpha");
+var driveid = document.getElementById("driveid");
+var searchid = document.getElementById("searchid");
+var feedbackid = document.getElementById("feedback");
+var thought = document.getElementById("thought");
+var readings = document.getElementById("readings");
+var leftframe = document.getElementById("frame1");
+var rightframe = document.getElementById("frame2");
+
+var dbl = false;
+
+var start = document.getElementById("start");
+var stop = document.getElementById("stop");
+
+start.addEventListener("dblclick", 
+						function() { dbl = true; startTimer();
+									setTimeout( function() { dbl=false; },400);
+									}
+									);
+									
+start.addEventListener("click", 
+						function() { this.blur(); setTimeout( function() {if (dbl == false) {tab();}},300);}
+					);
+
+
+stop.addEventListener("dblclick", 
+						function() { dbl = true; stopTimer(); 
+						setTimeout( function() { dbl=false; },400);
+						});
+stop.addEventListener("click", 
+						function() { this.blur(); setTimeout( function() {if (dbl == false) {tab();}},300 );}
+					);		
+
+
+var reset = document.getElementById("reset");  
+reset.addEventListener("click", resetTimer, false);
+var pushbar = true;
+var feedback = false;        
+
+// COUNTER ========================================================
+function counter() {
+  
+  // calculate the minutes and seconds from bigTime
+  mins = Math.floor(bigTime / 60);
+  secs = bigTime - mins * 60;
+
+  // change the HTML to show new minutes and seconds
+  minutes.innerHTML = (mins < 10 ? '0' : '') + mins;
+  seconds.innerHTML = (secs < 10 ? '0' : '') + secs;
+  
+  // handle the animations
+    var divisor = 300;
+  
+    percent = secs / divisor;
+    color = shadeColor(color, -percent);
+  //  document.body.style.background = "#" + color;
+   // test.innerHTML = color;
+    divisor - 100;
+  
+  // change the message at 00
+  if (secs == 0) {
+    message.innerHTML = "";
+  }
+  
+  // switch modes if timer ends
+  if (bigTime == 0) {
+    
+    if (mode == "normal") {
+      document.getElementById('alarming').play()
+      // cooldown is 5min 
+      mode = "cooldown";    
+      bigTime = 300;
+      
+    } else if (mode == "cooldown") {
+      
+      // switch back to normal 25min mode
+      mode = "normal";    
+      bigTime = 1499;  
+      
+      minutes.innerHTML = "24";
+      seconds.innerHTML = "59";
+      
+      document.body.style.background = "#" + color;
+      
+      // show start button
+      start.style.display = "block"; 
+      stop.style.display = "none"; 
+      reset.style.display = "none"; 
+      
+      // stop timer
+      clearInterval(countdownID);
+    }    
+     
+  } else {
+    // decrement
+    bigTime = bigTime - 1;  document.title = "PUSH | " +(mins < 10 ? '0' : '') + mins + ":" + (secs < 10 ? '0' : '') + secs ;
+	
+  }
+        
+}
+
+// ACTIONS =======================================================
+
+// start timer
+function startTimer() {
+  // start timer
+  countdownID = setInterval("counter()", 1002);
+  
+  // show message
+  message.innerHTML = "";
+  
+  // show stop button
+  start.style.display = "none"; 
+  stop.style.display = "block"; 
+  reset.style.display = "none"; 
+  timer.style.opacity = "1";
+  minsec.style.opacity = "1";
+
+  navishb.style.background = "#666"; 
+} 
+
+// stop timer
+function stopTimer() {
+  // change message
+  message.innerHTML = "";
+  document.title = "push | NYUSH";
+  
+  // stop timer
+  clearInterval(countdownID);
+  resetTimer();
+  
+  // show reset button
+  start.style.display = "block"; 
+  stop.style.display = "none"; 
+  reset.style.display = "none"; 
+    timer.style.opacity = "0";
+	minsec.style.opacity = "0";
+ 	
+  navishb.style.background = "#111"; 
+}
+
+// reset timer
+function resetTimer() {
+  // reset big time
+  bigTime = 1499;
+  
+  // change message
+  message.innerHTML = "";
+  
+  // calculate the minutes and seconds from bigTime
+  mins = Math.floor(bigTime / 60);
+  secs = bigTime - mins * 60;
+  // show start button
+  start.style.display = "block"; 
+  stop.style.display = "none"; 
+  reset.style.display = "none"; 
+    minutes.innerHTML = (mins < 10 ? '0' : '') + mins;
+  seconds.innerHTML = (secs < 10 ? '0' : '') + secs;  
+  
+}
+
+//function buzzer(){var alarming=new Audio("alarm.wav"); alarming.play();}
+
+// ANIMATIONS ================================================ 
+function fadeToBlack() {
+  
+}
+
+function colorChange() {
+  
+}
+
+// HELPER FUNCTIONS ============================================ 
+function shadeColor(color, percent) {   
+    var num = parseInt(color,16),
+    amt = Math.round(2.55 * percent),
+    R = (num >> 16) + amt,
+    B = (num >> 8 & 0x00FF) + amt,
+    G = (num & 0x0000FF) + amt;
+    return (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+}
+
+ </script>
+</body>
+</html>
